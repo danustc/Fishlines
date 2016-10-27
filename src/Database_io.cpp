@@ -28,3 +28,16 @@ void Load_spreadsheet(string fname, struct line_node* base_hand){
 	} //endif
 }
 
+
+// write a node into a file
+void write_node(struct line_node* Node, ofstream &file_os){
+	if(!Node) return;
+	file_os << Node->z_number << '\t' << Node->genotype << '\t';
+	file_os << Node->father->z_number << '\t' << Node->mother->z_number <<endl;
+
+}
+
+
+// read a new node from a file
+
+
