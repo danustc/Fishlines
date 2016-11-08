@@ -9,13 +9,13 @@
 #include<cstdlib>
 #include<cstddef>
 #include<string>
+#include<iostream>
 
 #include "linenode.h"
-typedef long int size_t;
 
 
 //Initialize a new newline node.
-struct line_node* Node(size_t z_new, string geno_new){
+struct line_node* Node(std::size_t z_new, string geno_new){
 	struct line_node* newline = new(struct line_node);
 	newline -> father = NULL;
 	newline -> mother = NULL;
@@ -26,13 +26,22 @@ struct line_node* Node(size_t z_new, string geno_new){
 }
 
 void Father(struct line_node* F1, struct line_node* F0){
-	F1 -> father = F0;
-}
+	if (F1 -> father == NULL)
+		F1 -> father = F0;
+	else
+		cout<<"The father of " << F1->z_number << " has been assigned."<<endl;
+} // end Father assignment
 
 
 void Mother(struct line_node* F1, struct line_node* F0){
-	F1 -> mother = F0;
-}
+	if(F1 -> mother == NULL)
+		F1 -> mother = F0;
+	else
+		cout<<"The mother of " << F1->z_number << " has been assigned."<<endl;
+} // end Mother assignment
+
+
+
 
 
 

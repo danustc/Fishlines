@@ -5,9 +5,10 @@
  *      Author: sillycat
  */
 
-
+#include "linenode.h"
 
 
 int main(int argc, char **argv[]){
+
 	return 0;
 }

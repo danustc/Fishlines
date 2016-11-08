@@ -12,21 +12,6 @@
 #include "linenode.h"
 
 
-void Load_spreadsheet(string fname, struct line_node* base_hand){
-	ifstream spreadsheet(fname);
-	string line;
-	if (spreadsheet.is_open()){
-		while (getline(spreadsheet,line)){
-		      cout << line << '\n';
-		      /*
-		       * should I add some python string parsing functions here?
-		       */
-
-		    }
-		spreadsheet.close();
-
-	} //endif
-}
 
 
 // write a node into a file
