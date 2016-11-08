@@ -13,8 +13,7 @@
 #include"linenode.h"
 
 
-fish_catalog::fish_catalog(std::size_t NL){
-	n_layer = NL;
+fish_catalog::fish_catalog(void){
 	n_count = 0;
 
 
@@ -58,10 +57,14 @@ int fish_catalog::insert_line(struct line_node *new_node){
 } // insert a line
 
 
-void fish_catalog::write2file(char *fname){
-	for(std::vector<line_node*>::iterator line_it = catalog.begin(); line_it!=catalog.end(); ++line_it){
+void fish_catalog::write2file(string fname){
+	line_node* ptr = NULL;
 
+	for(std::vector<line_node*>::iterator line_it = catalog.begin(); line_it!=catalog.end(); ++line_it){
+		ptr = *line_it;
+		cout<< ptr->z_number <<'\t'<< ptr->zf << '\t' << ptr->zm <<endl;
 	} //end for
+	cout << "The data base saved as " << fname.c_str() << endl;
 }// write into a file
 
 
