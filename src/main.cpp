@@ -14,9 +14,9 @@
 int main(int argc, char *argv[]){
 	cout << "argc = " << argc << endl;
 	string fname;
-	if(argc > 0){
+	if(argc > 1){
 		//if the number of arguments is non-zero
-		fname = argv[0]; // catch the filename
+		fname = argv[1]; // catch the filename
 		if (!file_exists(fname))
 			cout << "The database file does not exist."<<endl;
 		else
@@ -27,12 +27,15 @@ int main(int argc, char *argv[]){
 	}
 
 
-	fish_catalog FC;
-	std::size_t z_num, zf, zm;
-	cout << "Please enter the fish number"<<endl;
-	cin >> z_num;
-	cout << "The new z_number is: " << z_num << endl;
-	cout <<
+
+	line_node *ptr = catalog_input_line();
+	// OK, here
+	fish_catalog FC(ptr);
+	FC.insert_line(ptr);
+	for (int ic =0; ic< 3; ++ic){
+		ptr = catalog_input_line();
+		FC.insert_line(ptr);
+	}
 
 	FC.write2file(fname);
 

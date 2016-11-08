@@ -11,7 +11,8 @@
 
 
 bool file_exists(const std::string & fname);
-
+line_node* catalog_input_line(void);
+void catalog_printout(fish_catalog *FC);
 
 
 #endif /* INCLUDES_DATABASE_IO_H_ */

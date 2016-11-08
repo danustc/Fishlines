@@ -13,7 +13,7 @@
 #include"linenode.h"
 
 
-fish_catalog::fish_catalog(void){
+fish_catalog::fish_catalog(struct line_node *root){
 	n_count = 0;
 
 
@@ -62,10 +62,15 @@ void fish_catalog::write2file(string fname){
 
 	for(std::vector<line_node*>::iterator line_it = catalog.begin(); line_it!=catalog.end(); ++line_it){
 		ptr = *line_it;
-		cout<< ptr->z_number <<'\t'<< ptr->zf << '\t' << ptr->zm <<endl;
+		cout<< ptr->z_number <<'\t'<< ptr->zf << '\t' << ptr->zm;
+		cout<< std::setw(20)<<ptr->genotype <<'\t'<< dob2string(ptr)<<endl;
 	} //end for
 	cout << "The data base saved as " << fname.c_str() << endl;
 }// write into a file
+
+
+
+
 
 
 fish_catalog::~fish_catalog(void){
