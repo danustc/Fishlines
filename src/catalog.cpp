@@ -10,7 +10,7 @@
 #include<algorithm>
 #include<vector>
 #include"linenode.h"
-
+#include"database_io.h"
 
 fish_catalog::fish_catalog(struct line_node *root){
 	n_count = 0;
@@ -78,6 +78,28 @@ int fish_catalog::delete_line(std::size_t z_num){
 
 	return status;
 } // delete a line
+
+
+int fish_catalog::terminal_input(void){
+	int cnt = 0, sta = -1;
+	char status = 'y';
+	do{
+
+		line_node * ptr = catalog_input_line();
+		sta = insert_line(ptr);
+		if(sta == 0){
+			cnt ++;
+			cout << "Input successful! Input more lines? Yes(Y/y), No (N/n): ";
+			cin >> status;
+		}
+		else
+			break; // break from the while loop
+	}while(status =='Y' && status =='y');
+
+
+	return cnt;
+} // terminal_input
+
 
 
 int fish_catalog::get_size(void){

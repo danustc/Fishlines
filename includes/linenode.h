@@ -31,6 +31,8 @@ void add_comments(struct line_node *ptr);
 string dob2string(struct line_node *ptr);
 void string2dob(string dob, int *DOB);
 
+
+
 class fish_catalog{
 public:
 	fish_catalog(struct line_node *root); // constructor with no arguments
@@ -40,6 +42,7 @@ public:
 	int search_catalog(std::size_t z_num); // search through the z_number list
 	int get_size(void);
 	line_node* get_node(int pos);
+	int terminal_input(void);
 	~fish_catalog(void); // destructor with no arguments
 
 

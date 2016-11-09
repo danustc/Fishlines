@@ -1,41 +1,66 @@
 /*
  * main.cpp
+
  *
  *  Created on: Oct 26, 2016
  *      Author: sillycat
+ *      Last update: 11/09/2016
  */
 
 #include "linenode.h"
 #include "database_io.h"
 #include <iostream>
-#include <unistd.h>
+#include <cstdlib>
 
 
 int main(int argc, char *argv[]){
 	cout << "argc = " << argc << endl;
-	string fname;
-	if(argc > 1){
-		//if the number of arguments is non-zero
-		fname = argv[1]; // catch the filename
-		if (!file_exists(fname))
-			cout << "The database file does not exist."<<endl;
-		else
-			cout << "The database file exists." <<endl;
-	}
+
+	if(argc ==1){
+		cout << "No arguments. Please enter your options and database filenames." <<endl;
+		return 0;
+	} // endif argc ==1
+
 	else{
-		cout << "Please type in the database name:" <<endl;
-		cin >> fname;
-	}
+		//if the number of arguments is non-zero
+		int ch = atoi(argv[1]); // catch the filename
 
+		line_node *ptr = NULL;
+		fish_catalog FC(ptr);
 
-	line_node *ptr = NULL;
-	string ofname = fname + "_out";
+		switch(ch){
+		case 0:
+			cout << ch << "You selected direct input." <<endl;
+			FC.terminal_input();
+			break;
+		case 1:
+		{
+			cout << ch << "You selected reading from an existing database. " <<endl;
+			string fin;
+			if (argc > 2)
+				fin = argv[2];
+			else{
+				cout << "Please type in the database filename: ";
+				cin >> fin;
+			}
+			if (file_exists(fin)){
+				cout << "The database file does not exist."<< endl;
+				catalog_read_spreadsheet(fin, FC);
+			}//
+			else
+				cout << "Error! The database file doesn't exist. " <<endl;
+			break;
+		}
+		case 2:
+		{
+			cout << ch;
+			break;
+		}
+		default:
+			cout << ch;
+			break;
+		}//end switch
 
-	fish_catalog FC(ptr);
-	catalog_read_spreadsheet(fname, FC);
-	catalog_write_spreadsheet(ofname, &FC);
-
-
-
+	} //end else
 	return 0;
 }
