@@ -26,20 +26,23 @@ struct line_node{
 };
 
 
-struct line_node* Node(std::size_t, string);
+struct line_node* Node(std::size_t znum, std::size_t zf, std::size_t zm, string geno, int*);
 string dob2string(struct line_node *ptr);
+void string2dob(string dob, int *DOB);
 
 class fish_catalog{
 public:
 	fish_catalog(struct line_node *root); // constructor with no arguments
 	int insert_line(struct line_node* node); // Insert a line
-	bool search_catalog(std::size_t z_num); // search through the z_number list
-	void write2file(string fname); // write all the lines into a spreadsheet file
+	int delete_line(std::size_t z_num);
+	int search_catalog(std::size_t z_num); // search through the z_number list
+	int get_size(void);
+	line_node* get_node(int pos);
 	~fish_catalog(void); // destructor with no arguments
 
 
 private:
-	std::size_t n_count;
+	int n_count;
 	vector<std::size_t> z_list;
 	vector<line_node*> catalog;
 };

@@ -7,7 +7,6 @@
 
 
 #include<iostream>
-#include<iomanip>
 #include<algorithm>
 #include<vector>
 #include"linenode.h"
@@ -15,14 +14,19 @@
 
 fish_catalog::fish_catalog(struct line_node *root){
 	n_count = 0;
+	if(root !=NULL){
+		z_list.push_back(root->z_number);
+		catalog.push_back(root);
+		n_count++;
+	}
 
 
 }// Initialization of the class
 
 
-bool fish_catalog::search_catalog(std::size_t z_num){
+int fish_catalog::search_catalog(std::size_t z_num){
 	// Search through the z-number list to check if the line represented by z_num exists.
-	return (std::find(z_list.begin(), z_list.end(), z_num) != z_list.end());
+	return (std::find(z_list.begin(), z_list.end(), z_num) - z_list.begin());
 } // return true or false
 
 
@@ -34,17 +38,17 @@ int fish_catalog::insert_line(struct line_node *new_node){
  */
 	int status = -1;
 
-	if(!search_catalog(new_node->z_number)){
+	if(search_catalog(new_node->z_number) == n_count){
 		// if the new_node's z-number is not in the data base
 		z_list.push_back(new_node->z_number);
 		std::size_t zf = new_node->zf;
 		std::size_t zm = new_node->zm;
 
-		std::size_t pos_f = std::find(z_list.begin(), z_list.end(), zf) - z_list.begin();
+		int pos_f = search_catalog(zf);
 		if(pos_f < n_count)
 			new_node->father = catalog[pos_f];
 
-		std::size_t pos_m = std::find(z_list.begin(), z_list.end(), zm) - z_list.begin();
+		int pos_m = search_catalog(zm);
 		if(pos_m < n_count)
 			new_node->mother = catalog[pos_m];
 
@@ -57,19 +61,31 @@ int fish_catalog::insert_line(struct line_node *new_node){
 } // insert a line
 
 
-void fish_catalog::write2file(string fname){
-	line_node* ptr = NULL;
+int fish_catalog::delete_line(std::size_t z_num){
+	int status = -1;
+	int z_pos = search_catalog(z_num);
+	if(z_pos < n_count){
+		catalog[z_pos]->father = NULL;
+		catalog[z_pos]->mother = NULL;
+		catalog.erase(catalog.begin()+z_pos);
+		z_list.erase(z_list.begin()+z_pos);
+		n_count--;
+		status = 0;
+	}
 
-	for(std::vector<line_node*>::iterator line_it = catalog.begin(); line_it!=catalog.end(); ++line_it){
-		ptr = *line_it;
-		cout<< ptr->z_number <<'\t'<< ptr->zf << '\t' << ptr->zm;
-		cout<< std::setw(20)<<ptr->genotype <<'\t'<< dob2string(ptr)<<endl;
-	} //end for
-	cout << "The data base saved as " << fname.c_str() << endl;
-}// write into a file
+	return status;
+} // delete a line
 
 
+int fish_catalog::get_size(void){
+	int n_size = n_count;
+	return n_size;
+}//getsize
 
+line_node* fish_catalog::get_node(int pos){
+	line_node *ptr = catalog[pos];
+	return ptr;
+}
 
 
 

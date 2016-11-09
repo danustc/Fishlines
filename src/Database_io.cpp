@@ -8,9 +8,11 @@
 
 #include<iostream>
 #include<fstream>
+#include<iomanip>
 #include<string>
 #include<sys/stat.h>
 #include "linenode.h"
+#include "database_io.h"
 
 
 // write a node into a file
@@ -70,6 +72,43 @@ line_node* catalog_input_line(){
 } // input
 
 
+
+void catalog_write_spreadsheet(const std::string & fname, fish_catalog *FC){
+	std::ofstream outfile(fname.c_str());
+	line_node* ptr = NULL;
+	int n_size = FC->get_size();
+	outfile<< "#line" <<'\t'<< "#father" << '\t' << "#mother" << '\t';
+			outfile<< std::setw(30)<< "Genotype" <<'\t'<< "DOB" <<endl;
+
+	for(int ii = 0; ii < n_size; ii++){
+		ptr = FC->get_node(ii);
+		outfile<< ptr->z_number <<'\t'<< ptr->zf << '\t' << ptr->zm << '\t';
+		outfile<< std::setw(30)<<ptr->genotype <<'\t'<< dob2string(ptr)<<endl;
+	} //end for
+
+
+	cout << "The data base saved as " << fname.c_str() << endl;
+	outfile.close();
+}
+
+
 // read a new node from a file
 
+void catalog_read_spreadsheet(const std::string & fname, fish_catalog &FC){
+	std::ifstream infile(fname.c_str());
+	std::size_t z_num, zf, zm;
+	string genotype, dobs;
+	string line;
+	int DOB[3];
+	std::getline(infile, line);
+	cout << line << endl;
 
+	while(infile >> z_num >> zf >> zm >> genotype >> dobs){
+		string2dob(dobs, DOB);
+		line_node *new_node = Node(z_num, zf, zm, genotype, DOB);
+		FC.insert_line(new_node);
+	};
+
+
+	infile.close();
+}

@@ -53,3 +53,10 @@ string dob2string(struct line_node *ptr){
 	dob_str << ptr->DOB[0] << '/'<<ptr-> DOB[1] <<'/' << ptr->DOB[2];
 	return dob_str.str();
 }
+
+
+void string2dob(std::string dob, int *DOB){
+	std::istringstream dob_str(dob);
+	char delim[2];
+	dob_str >> DOB[0] >> delim[0] >> DOB[1] >> delim[1] >> DOB[2];
+}

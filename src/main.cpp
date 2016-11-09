@@ -23,21 +23,19 @@ int main(int argc, char *argv[]){
 			cout << "The database file exists." <<endl;
 	}
 	else{
+		cout << "Please type in the database name:" <<endl;
 		cin >> fname;
 	}
 
 
+	line_node *ptr = NULL;
+	string ofname = fname + "_out";
 
-	line_node *ptr = catalog_input_line();
-	// OK, here
 	fish_catalog FC(ptr);
-	FC.insert_line(ptr);
-	for (int ic =0; ic< 3; ++ic){
-		ptr = catalog_input_line();
-		FC.insert_line(ptr);
-	}
+	catalog_read_spreadsheet(fname, FC);
+	catalog_write_spreadsheet(ofname, &FC);
 
-	FC.write2file(fname);
+
 
 	return 0;
 }
