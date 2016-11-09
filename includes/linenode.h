@@ -39,6 +39,7 @@ public:
 	int insert_line(struct line_node* node); // Insert a line
 	int delete_line(std::size_t z_num);
 	void sort_line(void); // sort the fish lines
+	void catalog_merge(fish_catalog *f_source, char sort_method);
 	int search_catalog(std::size_t z_num); // search through the z_number list
 	int get_size(void);
 	line_node* get_node(int pos);
@@ -51,6 +52,7 @@ private:
 	vector<std::size_t> z_list;
 	vector<line_node*> catalog;
 };
+
 
 
 

@@ -113,6 +113,25 @@ line_node* fish_catalog::get_node(int pos){
 }
 
 
+void fish_catalog::catalog_merge(fish_catalog *fc_source, char sort_method = 'd'){
+	/*
+	 * Merge two catalog's contents; check for duplication and save all the contents in fc_dest.
+	 * start from the z_lists. check if the elements in fc_source exists in the local database.
+	 */
+	int icount, n_source = fc_source->get_size();
+	int status = -1;
+	line_node* ptr = NULL;
+	for (icount = 0; icount < n_source; ++icount){
+		ptr = fc_source->get_node(icount);
+		if(search_catalog(ptr->z_number) == n_count)
+			status = insert_line(ptr);
+		if(status ==-1)
+			break;
+	}//end for
+
+} // merge two catalogs.
+
+
 
 fish_catalog::~fish_catalog(void){
 	z_list.clear();
@@ -121,3 +140,5 @@ fish_catalog::~fish_catalog(void){
 	catalog.clear();
 
 }
+
+
