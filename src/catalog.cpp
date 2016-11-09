@@ -45,13 +45,16 @@ int fish_catalog::insert_line(struct line_node *new_node){
 		std::size_t zm = new_node->zm;
 
 		int pos_f = search_catalog(zf);
-		if(pos_f < n_count)
+		if(pos_f < n_count){
+			cout <<"father line found. "<<endl;
 			new_node->father = catalog[pos_f];
+		} //endif
 
 		int pos_m = search_catalog(zm);
-		if(pos_m < n_count)
+		if(pos_m < n_count){
+			cout <<"mother line found. "<<endl;
 			new_node->mother = catalog[pos_m];
-
+		}
 		catalog.push_back(new_node);
 		n_count ++;
 		status = 0;

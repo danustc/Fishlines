@@ -22,11 +22,12 @@ struct line_node{
 	struct line_node* mother;
 	string genotype;
 	std::size_t DOB[3]; // date of birth, month-date-year.
-	bool comp_info;
+	string comments;
 };
 
 
 struct line_node* Node(std::size_t znum, std::size_t zf, std::size_t zm, string geno, int*);
+void add_comments(struct line_node *ptr);
 string dob2string(struct line_node *ptr);
 void string2dob(string dob, int *DOB);
 
@@ -35,6 +36,7 @@ public:
 	fish_catalog(struct line_node *root); // constructor with no arguments
 	int insert_line(struct line_node* node); // Insert a line
 	int delete_line(std::size_t z_num);
+	void sort_line(void); // sort the fish lines
 	int search_catalog(std::size_t z_num); // search through the z_number list
 	int get_size(void);
 	line_node* get_node(int pos);

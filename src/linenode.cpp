@@ -47,6 +47,12 @@ void Mother(struct line_node* F1, struct line_node* F0){
 } // end Mother assignment
 
 
+void add_comments(struct line_node* ptr){
+	cout << "Comments for" << ptr->z_number << endl;
+	cin >> ptr->comments;
+}
+
+
 
 string dob2string(struct line_node *ptr){
 	std::ostringstream dob_str;
