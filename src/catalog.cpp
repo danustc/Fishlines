@@ -94,7 +94,7 @@ int fish_catalog::terminal_input(void){
 		}
 		else
 			break; // break from the while loop
-	}while(status =='Y' && status =='y');
+	}while(status =='Y' || status =='y');
 
 
 	return cnt;

@@ -62,7 +62,7 @@ line_node* catalog_input_line(){
 		cout << "The entered genotype is:" << nptr->genotype.c_str() <<endl;
 		cout << "genotype correct? Yes(Y/y), No(N/n): ";
 		cin >> accept;
-	}while(accept!='Y' && accept!='y');
+	}while(accept !='Y' && accept!='y');
 
 
 	nptr->father = NULL;
@@ -83,7 +83,7 @@ void catalog_write_spreadsheet(const std::string & fname, fish_catalog *FC){
 	for(int ii = 0; ii < n_size; ii++){
 		ptr = FC->get_node(ii);
 		outfile<< ptr->z_number <<'\t'<< ptr->zf << '\t' << ptr->zm << '\t';
-		outfile<< dob2string(ptr)<<ptr->genotype <<'\n';
+		outfile<< dob2string(ptr)<< '\t' << ptr->genotype <<'\n';
 		cout << dob2string(ptr)<<endl;
 	} //end for
 

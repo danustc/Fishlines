@@ -30,9 +30,20 @@ int main(int argc, char *argv[]){
 
 		switch(ch){
 		case 0:
-			cout << ch << "You selected direct input." <<endl;
+		{
+			string fout;
+			cout << "Choice" << ch << ": direct input of fish lines." <<endl;
 			FC.terminal_input();
+			cout << "Input complete!" <<endl;
+			if(argc > 2)
+				fout = argv[2];
+			else{
+				cout << "Please type in the database filename to save the line records: " <<endl;
+				cin >> fout;
+			}//end else
+			catalog_write_spreadsheet(fout, &FC);
 			break;
+		}
 		case 1:
 		{
 			cout << ch << "You selected reading from an existing database. " <<endl;
