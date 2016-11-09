@@ -78,12 +78,13 @@ void catalog_write_spreadsheet(const std::string & fname, fish_catalog *FC){
 	line_node* ptr = NULL;
 	int n_size = FC->get_size();
 	outfile<< "#line" <<'\t'<< "#father" << '\t' << "#mother" << '\t';
-			outfile<< std::setw(30)<< "Genotype" <<'\t'<< "DOB" <<endl;
+	outfile<< "Date of birth" << '\t'<< "Genotype" <<endl;
 
 	for(int ii = 0; ii < n_size; ii++){
 		ptr = FC->get_node(ii);
 		outfile<< ptr->z_number <<'\t'<< ptr->zf << '\t' << ptr->zm << '\t';
-		outfile<< std::setw(30)<<ptr->genotype <<'\t'<< dob2string(ptr)<<endl;
+		outfile<< dob2string(ptr)<<ptr->genotype <<'\n';
+		cout << dob2string(ptr)<<endl;
 	} //end for
 
 
@@ -97,13 +98,15 @@ void catalog_write_spreadsheet(const std::string & fname, fish_catalog *FC){
 void catalog_read_spreadsheet(const std::string & fname, fish_catalog &FC){
 	std::ifstream infile(fname.c_str());
 	std::size_t z_num, zf, zm;
-	string genotype, dobs;
+	std::string dobs, genotype;
 	string line;
 	int DOB[3];
 	std::getline(infile, line);
-	cout << line << endl;
+	cout << line <<endl;
 
-	while(infile >> z_num >> zf >> zm >> genotype >> dobs){
+	while(infile >> z_num >> zf >> zm >> dobs){
+		std::getline(infile, genotype);
+		genotype.erase(genotype.end()-1, genotype.end());
 		string2dob(dobs, DOB);
 		line_node *new_node = Node(z_num, zf, zm, genotype, DOB);
 		FC.insert_line(new_node);
