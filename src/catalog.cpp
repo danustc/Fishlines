@@ -48,13 +48,43 @@ int fish_catalog::insert_line(struct line_node *new_node){
 		if(pos_f < n_count){
 			cout <<"father line found. "<<endl;
 			new_node->father = catalog[pos_f];
+			new_node->father->father_of.push_back(new_node->z_number);
 		} //endif
 
 		int pos_m = search_catalog(zm);
 		if(pos_m < n_count){
 			cout <<"mother line found. "<<endl;
 			new_node->mother = catalog[pos_m];
+			new_node->mother->mother_of.push_back(new_node->z_number);
 		}
+
+		// Now, check the offsprings
+		if(!new_node->father_of.empty()){
+			int n_search;
+			for (vector<std::size_t>::iterator fit = new_node->father_of.begin(); fit!=new_node->father_of.end(); ++fit){
+				n_search = search_catalog(*fit);
+				if(n_search < n_count){
+					line_node* nptr = catalog[n_search];
+					nptr->father = new_node;
+				} // endif
+			}//end for
+
+		} // update offspring - father - mother
+
+		if(!new_node->mother_of.empty()){
+			int n_search;
+			for (vector<std::size_t>::iterator fit = new_node->mother_of.begin(); fit!=new_node->mother_of.end(); ++fit){
+				n_search = search_catalog(*fit);
+				if(n_search < n_count){
+					line_node* nptr = catalog[n_search];
+					nptr->mother = new_node;
+				} // endif
+			}//end for
+
+		} // update offspring - father - mother
+
+
+
 		catalog.push_back(new_node);
 		n_count ++;
 		status = 0;
@@ -130,6 +160,31 @@ void fish_catalog::catalog_merge(fish_catalog *fc_source, char sort_method = 'd'
 	}//end for
 
 } // merge two catalogs.
+
+
+void fish_catalog::output_lineage(std::size_t z_num, bool ifsave = false, string fname = ""){
+	/*
+	 * Output the lineage of the selected line z_num
+	 * Trace back first, then trace down.
+	 */
+	int pos = search_catalog(z_num);
+	if(pos == n_count)
+		cout<< "Error! The line "<< z_num << " is not in the data base." <<endl;
+	else{
+		if(ifsave){
+			if(fname.empty()){
+				cout<<"Please enter the file name:" <<endl;
+				cin >> fname;
+			}
+		line_node * z_ptr = catalog[pos];
+		cout <<"Lineage of the line " << z_ptr->z_number << ':' <<endl;
+
+		}//end ifsave
+
+	} // end else
+
+}
+
 
 
 

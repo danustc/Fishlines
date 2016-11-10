@@ -22,6 +22,8 @@ struct line_node{
 	struct line_node* mother;
 	string genotype;
 	std::size_t DOB[3]; // date of birth, month-date-year.
+	vector<std::size_t> father_of; // offspring lists.
+	vector<std::size_t> mother_of;
 	string comments;
 };
 
@@ -31,7 +33,7 @@ void add_comments(struct line_node *ptr);
 string dob2string(struct line_node *ptr);
 void string2dob(string dob, int *DOB);
 
-
+//----------------------------The definition of class fish_catalog-----------------------
 
 class fish_catalog{
 public:
@@ -44,6 +46,7 @@ public:
 	int get_size(void);
 	line_node* get_node(int pos);
 	int terminal_input(void);
+	void output_lineage(std::size_t z_num, bool ifsave, string fname );
 	~fish_catalog(void); // destructor with no arguments
 
 
