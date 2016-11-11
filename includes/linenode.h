@@ -29,9 +29,14 @@ struct line_node{
 
 
 struct line_node* Node(std::size_t znum, std::size_t zf, std::size_t zm, string geno, int*);
+struct line_node** trace_back(line_node* ptr);
+
 void add_comments(struct line_node *ptr);
 string dob2string(struct line_node *ptr);
 void string2dob(string dob, int *DOB);
+
+
+
 
 //----------------------------The definition of class fish_catalog-----------------------
 
@@ -46,7 +51,7 @@ public:
 	int get_size(void);
 	line_node* get_node(int pos);
 	int terminal_input(void);
-	void output_lineage(std::size_t z_num, bool ifsave, string fname );
+	void output_lineage(std::size_t z_num, bool ifsave);
 	~fish_catalog(void); // destructor with no arguments
 
 

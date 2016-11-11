@@ -162,7 +162,7 @@ void fish_catalog::catalog_merge(fish_catalog *fc_source, char sort_method = 'd'
 } // merge two catalogs.
 
 
-void fish_catalog::output_lineage(std::size_t z_num, bool ifsave = false, string fname = ""){
+void fish_catalog::output_lineage(std::size_t z_num, bool ifsave = false){
 	/*
 	 * Output the lineage of the selected line z_num
 	 * Trace back first, then trace down.
@@ -170,16 +170,15 @@ void fish_catalog::output_lineage(std::size_t z_num, bool ifsave = false, string
 	int pos = search_catalog(z_num);
 	if(pos == n_count)
 		cout<< "Error! The line "<< z_num << " is not in the data base." <<endl;
-	else{
-		if(ifsave){
-			if(fname.empty()){
-				cout<<"Please enter the file name:" <<endl;
-				cin >> fname;
-			}
-		line_node * z_ptr = catalog[pos];
-		cout <<"Lineage of the line " << z_ptr->z_number << ':' <<endl;
+	else{ // output the ancestors of the output:
+		line_node *zptr = get_node(pos);
+		cout<< "The paternal ancestors of the line " << z_num <<':'<<endl;
+		cout<< zptr-> zf <<endl;
+		if(zptr->father!=NULL)
 
-		}//end ifsave
+
+		cout<< "The naternal ancestors of the line " << z_num <<':'<<endl;
+		cout<< zptr-> zm <<endl;
 
 	} // end else
 
