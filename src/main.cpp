@@ -12,6 +12,15 @@
 #include <iostream>
 #include <cstdlib>
 
+/*
+ * flags:
+ * -i <filename.txt> input the file name
+ * -m <file1.txt> <file2.txt> ... <filen.txt> merge multiple database files
+ * -c <file.txt> <line number> add comments to the line number:
+ * -l <filename.txt> load an existing database
+ */
+
+
 
 int main(int argc, char *argv[]){
 	cout << "argc = " << argc << endl;
@@ -23,46 +32,59 @@ int main(int argc, char *argv[]){
 
 	else{
 		//if the number of arguments is non-zero
-		int ch = atoi(argv[1]); // catch the filename
+		char* ch_flag = argv[1]; // flag
+		char ch = ch_flag[1]; // the first character is dash
+		if(ch_flag[0] != '-')
+		{
+			cout <<"Error! the flag cannot be interpreted."<<endl;
+			return 1;
+		} // endif
 
-		line_node *ptr = NULL;
-		fish_catalog FC(ptr);
+
 
 		switch(ch){
-		case 0:
+		case 'i':
 		{
 			string fout;
-			cout << "Choice" << ch << ": direct input of fish lines." <<endl;
-			FC.terminal_input();
-			cout << "Input complete!" <<endl;
-			if(argc > 2)
+			line_node *ptr = NULL;
+			fish_catalog FC(ptr);
+			if(argc > 2){
 				fout = argv[2];
+				if(file_exists(fout)){
+					cout << "Find the database file." <<endl;
+					catalog_read_spreadsheet(fout, &FC);
+				}
+			}//endif
 			else{
 				cout << "Please type in the database filename to save the line records: " <<endl;
 				cin >> fout;
 			}//end else
+
+			cout << "Choice" << ch << ": direct input of fish lines." <<endl;
+			FC.terminal_input();
+			cout << "Input complete!" <<endl;
+
 			catalog_write_spreadsheet(fout, &FC);
 			break;
 		}
-		case 1:
+		case 'm':
 		{
-			cout << ch << "You selected reading from an existing database. " <<endl;
 			string fin;
-			if (argc > 2)
-				fin = argv[2];
+			int n_file = argc-2;
+			if (argc <2){
+				cout<<"Error! Insufficient number of datafiles. "<<endl;
+				return -1;
+			} // end if not sufficient number
+
 			else{
-				cout << "Please type in the database filename: ";
-				cin >> fin;
+				fish_catalog *FC_pools = new fish_catalog[n_file];
+				for (int ia = 0; ia< n_file; ++ia){
+					FC_pools[ia] = fish_catalog(NULL);
+				}//end for
 			}
-			if (file_exists(fin)){
-				cout << "The database file does not exist."<< endl;
-				catalog_read_spreadsheet(fin, FC);
-			}//
-			else
-				cout << "Error! The database file doesn't exist. " <<endl;
 			break;
 		}
-		case 2:
+		case 'l':
 		{
 			cout << ch;
 			break;

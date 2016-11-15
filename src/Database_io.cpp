@@ -48,6 +48,8 @@ line_node* catalog_input_line(){
 	do{
 		cout << "Please enter the date of birth in the format of mm, dd, yy "<<endl;
 		cin >> nptr->DOB[0] >> nptr->DOB[1] >> nptr->DOB[2];
+		if(nptr->DOB[2] < 20)
+			nptr->DOB[2] +=2000; //Convert the two-digit numbers into 4-digit numbers
 		cout << "The new line has the date of birth:" << '\t' ;
 		cout << nptr->DOB[0]<<'/'<<nptr->DOB[1]<<'/'<<nptr->DOB[2]<<endl;
 		cout << "DOB correct? Yes(Y/y), No(N/n): ";
@@ -95,7 +97,7 @@ void catalog_write_spreadsheet(const std::string & fname, fish_catalog *FC){
 
 // read a new node from a file
 
-void catalog_read_spreadsheet(const std::string & fname, fish_catalog &FC){
+void catalog_read_spreadsheet(const std::string & fname, fish_catalog *FC){
 	std::ifstream infile(fname.c_str());
 	std::size_t z_num, zf, zm;
 	std::string dobs, genotype;
@@ -109,7 +111,7 @@ void catalog_read_spreadsheet(const std::string & fname, fish_catalog &FC){
 		genotype.erase(genotype.end()-1, genotype.end());
 		string2dob(dobs, DOB);
 		line_node *new_node = Node(z_num, zf, zm, genotype, DOB);
-		FC.insert_line(new_node);
+		FC->insert_line(new_node);
 	};
 
 
